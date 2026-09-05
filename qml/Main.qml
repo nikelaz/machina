@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 ApplicationWindow {
+  id: window
   title: "System Information"
   visible: true
   width: 500
@@ -11,7 +12,6 @@ ApplicationWindow {
   Column {
     anchors.fill: parent
     anchors.margins: 13 
-    spacing: 13
 
     TabBar {
       id: bar
@@ -26,43 +26,44 @@ ApplicationWindow {
 
     StackLayout {
       width: parent.width
-      height: 40
+      height: parent.height - bar.height - 26 
       currentIndex: bar.currentIndex
       Item {
         id: infoTab 
-        Label { text: "Info tab" }
+        Rectangle {
+          anchors.fill: parent
+          color: window.palette.base
+          border.width: 1
+          border.color: window.palette.base.lighter(1.8)
+
+          Column {
+            anchors.fill: parent
+            anchors.margins: 8
+
+            InfoView {}
+          }
+        }
       }
       Item {
         id: processesTab 
-        Label { text: "Processes tab" }
+
+        Rectangle {
+          anchors.fill: parent
+          color: window.palette.base
+          border.width: 1
+          border.color: window.palette.base.lighter(1.8)
+
+          Column {
+            anchors.fill: parent
+            anchors.margins: 8 
+
+            ProcessList {
+              width: parent.width
+              height: parent.height
+            }
+          }
+        }
       }
-    }
-
-    Row {
-      spacing: 20
-
-      Column {
-        spacing: 10
-
-        Label { text: "OS:" }
-        Label { text: "Hostname:" }
-        Label { text: "Kernel:" }
-        Label { text: "Architecture:" }
-      }
-
-      Column {
-        spacing: 10
-
-        Label { text: os }
-        Label { text: hostname }
-        Label { text: kernel }
-        Label { text: arch }
-      }
-    }
-
-    ProcessList {
-      width: parent.width
-      height: parent.height - 120
     }
   }
 }

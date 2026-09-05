@@ -23,6 +23,7 @@ qt_add_qml_module(SystemInfo
   QML_FILES
     ./qml/Main.qml
     ./qml/ProcessList.qml
+    ./qml/InfoView.qml
 )
 
 target_link_libraries(SystemInfo
