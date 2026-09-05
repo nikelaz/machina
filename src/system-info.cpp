@@ -1,4 +1,4 @@
-#include "SystemInfo.h"
+#include "system-info.h"
 #include <sys/utsname.h>
 
 std::expected<SystemInformation, std::error_code>
