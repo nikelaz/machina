@@ -10,20 +10,20 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Qml)
 qt_standard_project_setup()
 
 qt_add_executable(SystemInfo
-    main.cpp
-    SystemInfo.cpp
-    AppContext.cpp 
+  ./src/Main.cpp
+  ./src/SystemInfo.cpp
+  ./src/AppContext.cpp
 )
 
 qt_add_qml_module(SystemInfo
-    URI SystemInfoQml
-    VERSION 1.0
-    QML_FILES
-      Main.qml
+  URI SystemInfoQml
+  VERSION 1.0
+  QML_FILES
+    ./qml/Main.qml
 )
 
 target_link_libraries(SystemInfo
-    PRIVATE
-        Qt6::Quick
-        Qt6::Qml
+  PRIVATE
+    Qt6::Quick
+    Qt6::Qml
 )
