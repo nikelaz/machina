@@ -1,54 +1,68 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Layouts
 
 ApplicationWindow {
   title: "System Information"
   visible: true
-  width: 400
-  height: 300
+  width: 500
+  height: 600
 
-  Row {
-    spacing: 20;
-    padding: 20;
+  Column {
+    anchors.fill: parent
+    anchors.margins: 13 
+    spacing: 13
 
-    Column {
-      spacing: 20;
-
-      Label {
-        text: "OS:"
+    TabBar {
+      id: bar
+      width: parent.width
+      TabButton {
+        text: qsTr("Info")
       }
-
-      Label {
-        text: "Hostname:"
-      }
-
-      Label {
-        text: "Kernel:" 
-      }
-
-      Label {
-        text: "Architecture:" 
+      TabButton {
+        text: qsTr("Processes")
       }
     }
 
-    Column {
-      spacing: 20;
+    StackLayout {
+      width: parent.width
+      height: 40
+      currentIndex: bar.currentIndex
+      Item {
+        id: infoTab 
+        Label { text: "Info tab" }
+      }
+      Item {
+        id: processesTab 
+        Label { text: "Processes tab" }
+      }
+    }
 
-      Label {
-        text: os
+    Row {
+      spacing: 20
+
+      Column {
+        spacing: 10
+
+        Label { text: "OS:" }
+        Label { text: "Hostname:" }
+        Label { text: "Kernel:" }
+        Label { text: "Architecture:" }
       }
 
-      Label {
-        text: hostname
-      }
+      Column {
+        spacing: 10
 
-      Label {
-        text: kernel
+        Label { text: os }
+        Label { text: hostname }
+        Label { text: kernel }
+        Label { text: arch }
       }
+    }
 
-      Label {
-        text: arch
-      }
+    ProcessList {
+      width: parent.width
+      height: parent.height - 120
     }
   }
 }

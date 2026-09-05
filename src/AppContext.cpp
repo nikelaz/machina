@@ -4,7 +4,8 @@
 
 void AppContext::registerContext(
   QQmlApplicationEngine& engine,
-  SystemInformation& system_info
+  SystemInformation& system_info,
+  ProcessModel& process_model
 )
 {
   engine.rootContext()->setContextProperty(
@@ -26,4 +27,6 @@ void AppContext::registerContext(
     "arch",
     QString::fromStdString(system_info.arch)
   );
+
+  engine.rootContext()->setContextProperty("processModel", &process_model);
 }
