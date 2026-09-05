@@ -7,24 +7,48 @@ ApplicationWindow {
   width: 400
   height: 300
 
-  Column {
+  Row {
     spacing: 20;
     padding: 20;
 
-    Label {
-      text: "OS: " + os
+    Column {
+      spacing: 20;
+
+      Label {
+        text: "OS:"
+      }
+
+      Label {
+        text: "Hostname:"
+      }
+
+      Label {
+        text: "Kernel:" 
+      }
+
+      Label {
+        text: "Architecture:" 
+      }
     }
 
-    Label {
-      text: "Hostname: " + hostname
-    }
+    Column {
+      spacing: 20;
 
-    Label {
-      text: "Kernel: " + kernel
-    }
+      Label {
+        text: os
+      }
 
-    Label {
-      text: "Architecture: " + arch
+      Label {
+        text: hostname
+      }
+
+      Label {
+        text: kernel
+      }
+
+      Label {
+        text: arch
+      }
     }
   }
 }
