@@ -2,8 +2,16 @@
 
 #include <fstream>
 
+/**
+ * @file memory-stats.cpp
+ * @brief Implementation of memory usage sampling from /proc/meminfo.
+ */
+
 namespace memory_stats {
 
+/**
+ * @brief Reads current memory usage from /proc/meminfo.
+ */
 MemoryInfo getMemoryInfo()
 {
   std::ifstream file("/proc/meminfo");
