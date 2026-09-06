@@ -13,19 +13,38 @@ usage, running processes and OS details. Self contained with immediate-mode UI.
 Precompiled, statically linked binaries are available on the
 [Releases](../../releases) page. Each release provides:
 
-- `machina-<version>-linux-x86_64.tar.gz` — the application binary
+- `machina-<version>-linux-x86_64.tar.gz` — the application binary and
+  `packaging/` (desktop entry, icons and an `install.sh` script)
 - `machina-<version>-linux-x86_64.tar.gz.sha256` — SHA-256 checksum
 
-Download the archive, verify the checksum (optional) and run it:
+Download the archive, verify the checksum (optional) and install it:
 
 ```bash
 sha256sum -c machina-*-linux-x86_64.tar.gz.sha256
 tar -xzf machina-*-linux-x86_64.tar.gz
-./machina
+sudo ./machina-*/packaging/install.sh   # system-wide, or without sudo for ~/.local
 ```
 
-No installation is required. The binary targets `x86_64` Linux and supports
-both X11 and Wayland.
+Alternatively, just extract and run the binary directly — no installation is
+required. The binary targets `x86_64` Linux and supports both X11 and Wayland.
+
+## Desktop integration
+
+The window icon (title bar, alt-tab, task bar) is embedded directly in the
+binary, so it works out of the box on X11. On Wayland, and for showing Machina
+in application launchers/menus, run the installer from the tarball:
+
+```bash
+./install.sh                  # user install: ~/.local/bin, icons, desktop entry
+sudo ./install.sh             # system-wide: /usr/local
+./install.sh --prefix=/opt    # custom prefix
+./install.sh uninstall        # remove an installed copy (same prefix flags)
+```
+
+`install.sh` copies the binary to `<prefix>/bin`, the icon into the hicolor
+icon theme, and the desktop entry into `<prefix>/share/applications`, so
+Machina shows up in your app menu with its icon. The installer refreshes the
+desktop/icon caches automatically.
 
 ## Build dependencies
 

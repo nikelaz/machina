@@ -10,6 +10,10 @@
 #include "memory-stats.h"
 #include "process-reader.h"
 #include "system-info.h"
+#include "ui/icons.h"
+
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 #include <chrono>
 #include <cstdio>
@@ -78,6 +82,52 @@ Application::~Application()
 }
 
 /**
+ * @brief Decodes the embedded PNG icons and sets them as the window icon.
+ *
+ * The window manager picks the size closest to the icon slot it needs
+ * (title bar, alt-tab switcher, task bar). Only supported on X11; on
+ * Wayland the icon comes from the .desktop file instead.
+ *
+ * @param window Handle to the main GLFW window.
+ */
+static void setWindowIcon(GLFWwindow* window)
+{
+  GLFWimage images[ui::icons::embedded_icon_count];
+  int count = 0;
+
+  for (int i = 0; i < ui::icons::embedded_icon_count; ++i)
+  {
+    const ui::icons::EmbeddedIcon& icon = ui::icons::embedded_icons[i];
+
+    int width = 0;
+    int height = 0;
+    int channels = 0;
+    stbi_uc* pixels = stbi_load_from_memory(
+      icon.data, static_cast<int>(icon.data_size), &width, &height, &channels, 4);
+    if (!pixels)
+    {
+      std::fprintf(stderr, "failed to decode embedded %dpx icon\n", icon.size);
+      continue;
+    }
+
+    images[count].width = width;
+    images[count].height = height;
+    images[count].pixels = pixels;
+    ++count;
+  }
+
+  if (count > 0)
+  {
+    glfwSetWindowIcon(window, count, images);
+  }
+
+  for (int i = 0; i < count; ++i)
+  {
+    stbi_image_free(images[i].pixels);
+  }
+}
+
+/**
  * @brief Initializes GLFW and creates the main application window.
  *
  * Requests an OpenGL 3.0 context and enables vsync.
@@ -117,6 +167,8 @@ GLFWwindow* Application::createWindow()
     glfwTerminate();
     return nullptr;
   }
+
+  setWindowIcon(window);
 
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);

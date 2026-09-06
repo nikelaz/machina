@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Machina
+GenericName=System Monitor
+Comment=Display CPU usage, memory usage, running processes and OS details
+Exec=machina
+Icon=machina
+Terminal=false
+Categories=System;Monitor;
+StartupWMClass=Machina
+Keywords=system;monitor;cpu;memory;processes;

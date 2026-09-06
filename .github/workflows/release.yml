@@ -46,12 +46,13 @@ jobs:
       - name: Strip binary
         run: strip build/machina
 
-      - name: Archive binary
+      - name: Archive binary and packaging
         run: |
           VERSION="${GITHUB_REF_NAME}"
-          mkdir -p dist
-          cp build/machina dist/
-          tar -czf "machina-${VERSION}-linux-x86_64.tar.gz" -C dist machina
+          mkdir -p "dist/machina-${VERSION}-linux-x86_64"
+          cp build/machina "dist/machina-${VERSION}-linux-x86_64/"
+          cp -r packaging "dist/machina-${VERSION}-linux-x86_64/packaging"
+          tar -czf "machina-${VERSION}-linux-x86_64.tar.gz" -C dist "machina-${VERSION}-linux-x86_64"
           sha256sum "machina-${VERSION}-linux-x86_64.tar.gz" > "machina-${VERSION}-linux-x86_64.tar.gz.sha256"
 
       - name: Create GitHub release and upload assets
