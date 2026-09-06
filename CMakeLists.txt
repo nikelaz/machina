@@ -48,19 +48,27 @@ add_executable(SystemInfo
   ./src/system-info.cpp
   ./src/process-reader.cpp
   ./src/cpu-stats.cpp
+  ./src/memory-stats.cpp
   ./src/ui/ui-system.cpp
   ./src/ui/views/main-view.cpp
   ./src/ui/views/system-info-view.cpp
   ./src/ui/views/processes-table-view.cpp
   ./src/ui/components/panel.cpp
   ./src/ui/components/tab-bar.cpp
+  ./src/ui/components/labeled-progress-bar.cpp
 )
 
 target_include_directories(SystemInfo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+# fontconfig (for loading the system font)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(FONTCONFIG REQUIRED IMPORTED_TARGET fontconfig)
+
 target_link_libraries(SystemInfo
   PRIVATE
     imgui
+    PkgConfig::FONTCONFIG
 )
 
 # Docs

@@ -8,6 +8,7 @@
 #include "process-reader.h"
 #include "system-info.h"
 #include "cpu-stats.h"
+#include "memory-stats.h"
 
 #include <cstdio>
 #include <vector>
@@ -53,6 +54,8 @@ void Application::backgroundWorker()
     new_state->cpu_utilization = cpu_stats::getCpuUtilization(cpu_stats_prev, cpu_stats_current);
     cpu_stats_prev = cpu_stats_current;
 
+    new_state->memory_info = memory_stats::getMemoryInfo(); 
+
     m_state.store(std::move(new_state));  // publish: atomic pointer swap, no data copied
 
     std::this_thread::sleep_for(1s);
@@ -91,7 +94,7 @@ GLFWwindow* Application::createWindow()
 
   // TODO: Extract to some sort of app settings
   const int window_width = 500;
-  const int window_height = 500;
+  const int window_height = 350;
   const char* window_title = "System Information";
 
   GLFWwindow* window = glfwCreateWindow(

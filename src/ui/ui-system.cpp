@@ -15,8 +15,67 @@
 
 #include "ui/views/main-view.h"
 
+#include <fontconfig/fontconfig.h>
+
+#include <string>
+
 namespace ui
 {
+
+/**
+ * @brief Resolves the system default sans-serif font file via fontconfig.
+ *
+ * Queries fontconfig for the file backing the "sans-serif" alias, which
+ * respects the user's desktop font settings.
+ *
+ * @return Absolute path to the font file, or an empty string if it
+ *         cannot be resolved.
+ */
+static std::string getSystemFontPath()
+{
+  std::string result;
+
+  FcConfig* config = FcInitLoadConfigAndFonts();
+  FcPattern* pattern = FcNameParse(reinterpret_cast<const FcChar8*>("sans-serif"));
+  FcConfigSubstitute(config, pattern, FcMatchPattern);
+  FcDefaultSubstitute(pattern);
+
+  FcResult res = FcResultNoMatch;
+  FcPattern* match = FcFontMatch(config, pattern, &res);
+  if (match)
+  {
+    FcChar8* file = nullptr;
+    if (FcPatternGetString(match, FC_FILE, 0, &file) == FcResultMatch)
+    {
+      result = reinterpret_cast<char*>(file);
+    }
+    FcPatternDestroy(match);
+  }
+
+  FcPatternDestroy(pattern);
+  FcConfigDestroy(config);
+  return result;
+}
+
+/**
+ * @brief Loads the system font into the ImGui font atlas.
+ *
+ * Falls back to ImGui's embedded default font if fontconfig cannot resolve
+ * a font file or the file fails to load.
+ *
+ * @param font_size Rasterization size in pixels.
+ */
+static void loadSystemFont(float font_size)
+{
+  const std::string font_path = getSystemFontPath();
+  if (font_path.empty())
+  {
+    return;
+  }
+
+  ImGuiIO& io = ImGui::GetIO();
+  io.Fonts->AddFontFromFileTTF(font_path.c_str(), font_size);
+}
 
 /**
  * @brief Creates the ImGui context and initializes the GLFW/OpenGL3 backends.
@@ -55,6 +114,8 @@ void UISystem::createImGuiContext()
   ImGui::CreateContext();
   ImGui_ImplGlfw_InitForOpenGL(m_window, true);
   ImGui_ImplOpenGL3_Init("#version 130");
+
+  loadSystemFont(16.0f);
   setImGuiTheme();
 }
 

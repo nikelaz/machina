@@ -4,8 +4,13 @@
  */
 
 #include "imgui.h"
+#include <wayland-util.h>
 
 #include "system-info-view.h"
+
+#include "ui/components/labeled-progress-bar.h"
+
+#include <format>
 
 namespace ui::views {
 
@@ -21,13 +26,24 @@ void systemInfoView(const AppState& state)
   ImGui::Text("Arch:      %s", state.system_info.arch.c_str());
 
   ImGui::SeparatorText("CPU & Memory");
-  ImGui::Text("CPU %.0f%%", state.cpu_utilization * 100);
-  ImGui::SameLine(0.0f, 16.0f); 
-  ImGui::ProgressBar(
+
+  components::labeledProgressBar(
+    "CPU",
     state.cpu_utilization,
-    ImVec2(-1, 13),
-    ""
+    22.0f,
+    std::format("{:.0f}%", state.cpu_utilization * 100)
   );
+
+  components::labeledProgressBar(
+    "Memory",
+    state.memory_info.utilized,
+    22.0f,
+    std::format("{:.0f}%", state.memory_info.utilized * 100)
+  );
+
+  ImGui::Text("Memory Total: %f GB", state.memory_info.total_gb);
+  ImGui::Text("Memory Used: %f GB", state.memory_info.total_gb - state.memory_info.available_gb);
+  ImGui::Text("Memory Available: %f GB", state.memory_info.available_gb);
 }
 
 } // namespace ui::views
