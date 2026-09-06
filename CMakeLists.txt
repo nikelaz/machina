@@ -56,6 +56,7 @@ add_executable(SystemInfo
   ./src/ui/components/panel.cpp
   ./src/ui/components/tab-bar.cpp
   ./src/ui/components/labeled-progress-bar.cpp
+  ./src/ui/components/progress-bar.cpp
 )
 
 target_include_directories(SystemInfo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)

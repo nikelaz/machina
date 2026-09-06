@@ -8,42 +8,95 @@
 
 #include "system-info-view.h"
 
-#include "ui/components/labeled-progress-bar.h"
+#include "ui/components/progress-bar.h"
 
 #include <format>
+#include <string>
+#include <string_view>
 
 namespace ui::views {
 
+/// Width of the fixed label column shared by all info tables.
+constexpr float kLabelColumnWidth = 120.0f;
+
+/// Height of the progress bars in the info tables.
+constexpr float kBarHeight = 22.0f;
+
 /**
- * @brief Renders OS, hostname, kernel and architecture details as text.
+ * @brief Begins a two-column info table (fixed label column, stretched value column).
+ *
+ * @param id ImGui ID of the table (must be unique among sibling tables).
+ */
+void beginInfoTable(const char* id)
+{
+  ImGui::BeginTable(id, 2, ImGuiTableFlags_None);
+  ImGui::TableSetupColumn("label", ImGuiTableColumnFlags_WidthFixed, kLabelColumnWidth);
+  ImGui::TableSetupColumn("value", ImGuiTableColumnFlags_WidthStretch);
+}
+
+/**
+ * @brief Ends the current info table.
+ */
+void endInfoTable()
+{
+  ImGui::EndTable();
+}
+
+/**
+ * @brief Adds a label/value text row to the current info table.
+ *
+ * @param label Row label (drawn in the label column).
+ * @param value Row value (drawn in the value column).
+ */
+void infoRow(std::string_view label, const std::string& value)
+{
+  ImGui::TableNextRow();
+  ImGui::TableNextColumn();
+  ImGui::TextUnformatted(label.data(), label.data() + label.size());
+  ImGui::TableNextColumn();
+  ImGui::TextUnformatted(value.c_str());
+}
+
+/**
+ * @brief Adds a label/progress-bar row to the current info table.
+ *
+ * @param label Row label (drawn in the label column).
+ * @param fraction Progress value in the range [0.0, 1.0].
+ * @param overlay Overlay text rendered on top of the bar.
+ */
+void barRow(std::string_view label, float fraction, const std::string& overlay)
+{
+  ImGui::TableNextRow();
+  ImGui::TableNextColumn();
+  ImGui::TextUnformatted(label.data(), label.data() + label.size());
+  ImGui::TableNextColumn();
+  components::progressBar(fraction, kBarHeight, overlay);
+}
+
+/**
+ * @brief Renders system information and CPU/memory stats in aligned tables.
  */
 void systemInfoView(const AppState& state)
 {
   ImGui::SeparatorText("System");
-  ImGui::Text("OS:        %s", state.system_info.os.c_str());
-  ImGui::Text("Hostname:  %s", state.system_info.hostname.c_str());
-  ImGui::Text("Kernel:    %s", state.system_info.kernel.c_str());
-  ImGui::Text("Arch:      %s", state.system_info.arch.c_str());
+  beginInfoTable("system");
+  infoRow("OS", state.system_info.os);
+  infoRow("Hostname", state.system_info.hostname);
+  infoRow("Kernel", state.system_info.kernel);
+  infoRow("Arch", state.system_info.arch);
+  endInfoTable();
 
   ImGui::SeparatorText("CPU & Memory");
-
-  components::labeledProgressBar(
-    "CPU",
-    state.cpu_utilization,
-    22.0f,
-    std::format("{:.0f}%", state.cpu_utilization * 100)
-  );
-
-  components::labeledProgressBar(
-    "Memory",
-    state.memory_info.utilized,
-    22.0f,
-    std::format("{:.0f}%", state.memory_info.utilized * 100)
-  );
-
-  ImGui::Text("Memory Total: %f GB", state.memory_info.total_gb);
-  ImGui::Text("Memory Used: %f GB", state.memory_info.total_gb - state.memory_info.available_gb);
-  ImGui::Text("Memory Available: %f GB", state.memory_info.available_gb);
+  beginInfoTable("cpu-mem");
+  barRow("CPU", state.cpu_utilization,
+         std::format("{:.0f}%", state.cpu_utilization * 100));
+  barRow("Memory", state.memory_info.utilized,
+         std::format("{:.0f}%", state.memory_info.utilized * 100));
+  infoRow("Total", std::format("{:.2f} GB", state.memory_info.total_gb));
+  infoRow("Used",
+          std::format("{:.2f} GB", state.memory_info.total_gb - state.memory_info.available_gb));
+  infoRow("Available", std::format("{:.2f} GB", state.memory_info.available_gb));
+  endInfoTable();
 }
 
 } // namespace ui::views

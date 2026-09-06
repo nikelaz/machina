@@ -93,8 +93,8 @@ GLFWwindow* Application::createWindow()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
   // TODO: Extract to some sort of app settings
-  const int window_width = 500;
-  const int window_height = 350;
+  const int window_width = 450;
+  const int window_height = 400;
   const char* window_title = "System Information";
 
   GLFWwindow* window = glfwCreateWindow(
