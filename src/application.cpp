@@ -12,6 +12,7 @@ Application::Application()
     m_ui(m_window),
     m_background_thread(&Application::backgroundWorker, this)
 {
+  run();
 }
 
 void Application::backgroundWorker()
@@ -40,6 +41,7 @@ void Application::backgroundWorker()
 Application::~Application()
 {
   destroyWindow();
+  m_running = false;
   m_background_thread.join();
 }
 
@@ -90,8 +92,6 @@ void Application::destroyWindow()
 
 void Application::run()
 {
-  m_running = true;
-
   while (!glfwWindowShouldClose(m_window))
   {
     glfwPollEvents();
@@ -104,7 +104,5 @@ void Application::run()
 
     glfwSwapBuffers(m_window);
   }
-
-  m_running = false;
 }
 

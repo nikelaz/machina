@@ -12,10 +12,10 @@
 class Application {
 private:
   GLFWwindow* m_window = nullptr;
-  ui::UISystem m_ui;
+  std::atomic<bool> m_running;
   std::atomic<std::shared_ptr<const AppState>> m_state;
   std::thread m_background_thread;
-  std::atomic<bool> m_running;
+  ui::UISystem m_ui;
 
   static GLFWwindow* createWindow();
   void destroyWindow();
