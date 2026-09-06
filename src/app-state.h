@@ -20,4 +20,5 @@
 struct AppState {
   std::vector<process_reader::Process> processes; ///< Currently running processes.
   SystemInformation system_info;                  ///< Static system information (OS, kernel, etc.).
+  double cpu_utilization;                         ///< Normalized CPU utilization (0 - 1)
 };

@@ -7,6 +7,7 @@
 
 #include "process-reader.h"
 #include "system-info.h"
+#include "cpu-stats.h"
 
 #include <cstdio>
 #include <vector>
@@ -31,6 +32,9 @@ void Application::backgroundWorker()
 {
   using namespace std::chrono_literals;
 
+  cpu_stats::ProcCpuStats cpu_stats_prev = cpu_stats::readProcCpuStats();
+  cpu_stats::ProcCpuStats cpu_stats_current;
+
   while (m_running)
   {
     auto new_state = std::make_shared<AppState>();
@@ -43,6 +47,11 @@ void Application::backgroundWorker()
     }
 
     new_state->processes = process_reader::getProcesses();
+
+    cpu_stats_current = cpu_stats::readProcCpuStats();
+
+    new_state->cpu_utilization = cpu_stats::getCpuUtilization(cpu_stats_prev, cpu_stats_current);
+    cpu_stats_prev = cpu_stats_current;
 
     m_state.store(std::move(new_state));  // publish: atomic pointer swap, no data copied
 
