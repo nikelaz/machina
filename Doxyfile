@@ -1,0 +1,22 @@
+# Minimal Doxygen config. Override anything on the command line, e.g.:
+#   doxygen Doxyfile
+#   doxygen Doxyfile WARN_AS_ERROR=YES
+
+PROJECT_NAME           = SystemInfo
+INPUT                  = src
+RECURSIVE              = YES
+FILE_PATTERNS          = *.h
+EXCLUDE_PATTERNS       = */vendor/*
+
+# Only document explicitly-marked entities (/** ... */) — keeps noise down
+EXTRACT_ALL            = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = NO
+
+# Output: HTML only, no LaTeX/rtf/man bloat
+GENERATE_HTML          = YES
+HTML_OUTPUT            = docs/html
+GENERATE_LATEX         = NO
+
+# Vendors headers we include aren't parsed anyway, but keep dot/graphs off
+HAVE_DOT               = NO

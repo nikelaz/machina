@@ -44,9 +44,22 @@ add_executable(SystemInfo
   ./src/application.cpp
   ./src/system-info.cpp
   ./src/process-reader.cpp
+  ./src/cpu-stats.cpp
 )
 
 target_link_libraries(SystemInfo
   PRIVATE
     imgui
 )
+
+# Docs
+find_package(Doxygen QUIET)
+if(DOXYGEN_FOUND)
+  add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_SOURCE_DIR}/docs
+    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generating API documentation with Doxygen"
+    VERBATIM
+  )
+endif()
