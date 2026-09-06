@@ -8,6 +8,9 @@
 
 #include "system-info-view.h"
 
+#include "memory-stats.h"
+#include "system-info.h"
+
 #include "ui/components/progress-bar.h"
 
 #include <format>

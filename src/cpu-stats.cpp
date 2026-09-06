@@ -1,5 +1,11 @@
 #include "cpu-stats.h"
 
+#include <chrono>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <thread>
+
 /**
  * @file cpu-stats.cpp
  * @brief Implementation of CPU utilization sampling from /proc/stat.

@@ -5,12 +5,17 @@
 
 #include "application.h"
 
-#include "process-reader.h"
-#include "system-info.h"
+#include "GLFW/glfw3.h"
 #include "cpu-stats.h"
 #include "memory-stats.h"
+#include "process-reader.h"
+#include "system-info.h"
 
+#include <chrono>
 #include <cstdio>
+#include <expected>
+#include <system_error>
+#include <utility>
 #include <vector>
 
 Application::Application()

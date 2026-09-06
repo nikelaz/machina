@@ -4,6 +4,7 @@
  */
 
 #include "system-info.h"
+#include <cerrno>
 #include <sys/utsname.h>
 
 /**

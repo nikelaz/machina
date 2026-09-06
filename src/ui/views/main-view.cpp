@@ -7,6 +7,8 @@
 
 #include "imgui.h"
 
+#include <functional>
+
 #include "ui/components/panel.h"
 #include "ui/components/tab-bar.h"
 #include "ui/views/system-info-view.h"

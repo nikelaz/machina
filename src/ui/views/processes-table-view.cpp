@@ -5,9 +5,13 @@
 
 #include "processes-table-view.h"
 #include "imgui.h"
+#include "process-reader.h"
 
-#include <memory>
 #include <atomic>
+#include <cstddef>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace ui::views {
 

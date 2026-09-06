@@ -1,6 +1,7 @@
 #include "memory-stats.h"
 
 #include <fstream>
+#include <string>
 
 /**
  * @file memory-stats.cpp
