@@ -8,6 +8,11 @@ usage, running processes and OS details. Self contained with immediate-mode UI.
 > It is not intended as a production-grade system monitor, but if you find it
 > useful you are welcome to use it.
 
+## Screenshots
+
+<img width="1160" height="1116" alt="machina-system-info" src="https://github.com/user-attachments/assets/c198a4bb-9992-4c22-b777-4339aebaac07" />
+<img width="1160" height="1116" alt="machina-processes" src="https://github.com/user-attachments/assets/630335b6-4252-47df-8d9b-b8ef9e328bca" />
+
 ## Download
 
 Precompiled, statically linked binaries are available on the
