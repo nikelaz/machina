@@ -28,7 +28,10 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y doxygen
 
       - name: Build docs
-        run: doxygen Doxyfile
+        # doxygen >=1.16 doesn't create parent dirs for HTML_OUTPUT
+        run: |
+          mkdir -p docs
+          doxygen Doxyfile
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
