@@ -1,0 +1,57 @@
+name: Release build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            pkg-config \
+            libgl1-mesa-dev \
+            libx11-dev \
+            libxkbcommon-dev \
+            libfontconfig1-dev
+
+      - name: Configure (Release)
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Strip binary
+        run: strip build/SystemInfo
+
+      - name: Archive binary
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          mkdir -p dist
+          cp build/SystemInfo dist/
+          tar -czf "SystemInfo-${VERSION}-linux-x86_64.tar.gz" -C dist SystemInfo
+          sha256sum "SystemInfo-${VERSION}-linux-x86_64.tar.gz" > "SystemInfo-${VERSION}-linux-x86_64.tar.gz.sha256"
+
+      - name: Create GitHub release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          files: |
+            SystemInfo-*-linux-x86_64.tar.gz
+            SystemInfo-*-linux-x86_64.tar.gz.sha256
+          generate_release_notes: true
