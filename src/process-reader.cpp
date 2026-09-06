@@ -1,5 +1,8 @@
 #include "process-reader.h"
 
+#include <filesystem>
+#include <fstream>
+
 namespace fs = std::filesystem;
 
 namespace process_reader {

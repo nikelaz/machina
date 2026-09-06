@@ -4,6 +4,9 @@ project(SystemInfo VERSION 1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Export compile_commands.json for clangd / language servers
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # ImGui
 
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
@@ -45,7 +48,15 @@ add_executable(SystemInfo
   ./src/system-info.cpp
   ./src/process-reader.cpp
   ./src/cpu-stats.cpp
+  ./src/ui/ui-system.cpp
+  ./src/ui/views/main-view.cpp
+  ./src/ui/views/system-info-view.cpp
+  ./src/ui/views/processes-table-view.cpp
+  ./src/ui/components/panel.cpp
+  ./src/ui/components/tab-bar.cpp
 )
+
+target_include_directories(SystemInfo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 target_link_libraries(SystemInfo
   PRIVATE

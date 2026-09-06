@@ -1,10 +1,12 @@
 #pragma once
 
-#include <filesystem>
-#include <fstream>
 #include <vector>
 #include <string>
 
+/**
+ * @namespace process_reader
+ * @brief Reads the list of running processes from /proc.
+ */
 namespace process_reader {
   struct Process
   {
