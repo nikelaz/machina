@@ -4,8 +4,6 @@ struct GLFWwindow;
 
 #include "app-state.h"
 
-#include <memory>
-
 namespace ui
 {
 
@@ -18,6 +16,7 @@ private:
   void newFrame();
   void prepareBackbuffer();
   void prepareViewport();
+  void setImGuiTheme();
 public:
   UISystem(GLFWwindow* window);
   ~UISystem();
