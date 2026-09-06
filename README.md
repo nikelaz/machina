@@ -1,4 +1,4 @@
-# SystemInfo
+# System Info
 
 A Linux desktop application that displays system information - CPU usage, memory
 usage, running processes and OS details. Self contained with immediate-mode UI.
@@ -105,8 +105,8 @@ sudo pacman -S --needed \
 ## Building
 
 ```bash
-git clone --recursive https://github.com/<owner>/system-information.git
-cd system-information
+git clone --recursive https://github.com/nikelaz/system-info.git
+cd system-info 
 
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
@@ -126,7 +126,7 @@ cmake --build build --target docs
 ```
 
 The generated API documentation is also hosted online at
-<https://nikelaz.github.io/system-information/>.
+<https://nikelaz.github.io/system-info/>.
 
 ## License
 
