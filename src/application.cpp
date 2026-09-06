@@ -59,7 +59,7 @@ void Application::backgroundWorker()
 
     new_state->memory_info = memory_stats::getMemoryInfo(); 
 
-    m_state.store(std::move(new_state));  // publish: atomic pointer swap, no data copied
+    m_state.store(std::move(new_state));
 
     std::this_thread::sleep_for(1s);
   } 
@@ -95,12 +95,9 @@ GLFWwindow* Application::createWindow()
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
-  // Match the running window to the machina.desktop entry: WM_CLASS on X11,
-  // app_id on Wayland. Compositors and docks use this to show the installed
-  // icon in the title bar, task bar and alt-tab switcher.
   glfwWindowHintString(GLFW_X11_CLASS_NAME, "Machina");
   glfwWindowHintString(GLFW_X11_INSTANCE_NAME, "machina");
-  glfwWindowHintString(GLFW_WAYLAND_APP_ID, "Machina");
+  glfwWindowHintString(GLFW_WAYLAND_APP_ID, "machina");
 
   // TODO: Extract to some sort of app settings
   const int window_width = 450;
