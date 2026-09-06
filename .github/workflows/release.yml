@@ -27,6 +27,13 @@ jobs:
             pkg-config \
             libgl1-mesa-dev \
             libx11-dev \
+            libxcursor-dev \
+            libxrandr-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libwayland-dev \
+            libwayland-bin \
+            wayland-protocols \
             libxkbcommon-dev \
             libfontconfig1-dev
 
