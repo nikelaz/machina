@@ -1,3 +1,8 @@
+/**
+ * @file processes-table-view.cpp
+ * @brief Implementation of the processes table view.
+ */
+
 #include "processes-table-view.h"
 #include "imgui.h"
 
@@ -6,6 +11,9 @@
 
 namespace ui::views {
 
+/**
+ * @brief Renders the running process list as a scrollable PID/Name table.
+ */
 void processesTableView(const AppState& state)
 {
   const ImGuiTableFlags table_flags = ImGuiTableFlags_Borders |

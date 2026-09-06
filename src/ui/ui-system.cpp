@@ -1,3 +1,8 @@
+/**
+ * @file ui-system.cpp
+ * @brief Implementation of the ImGui rendering system.
+ */
+
 #include "ui-system.h"
 
 #include <GLFW/glfw3.h>
@@ -13,17 +18,26 @@
 namespace ui
 {
 
+/**
+ * @brief Creates the ImGui context and initializes the GLFW/OpenGL3 backends.
+ */
 UISystem::UISystem(GLFWwindow* window)
   : m_window(window)
 {
   createImGuiContext();
 }
 
+/**
+ * @brief Shuts down the ImGui backends and destroys the context.
+ */
 UISystem::~UISystem()
 {
   destroyImGuiContext();
 }
 
+/**
+ * @brief Renders one full frame for the given state to the backbuffer.
+ */
 void UISystem::renderFrameToBackbuffer(const AppState& state)
 {
   newFrame();
@@ -32,6 +46,9 @@ void UISystem::renderFrameToBackbuffer(const AppState& state)
   prepareBackbuffer();
 }
 
+/**
+ * @brief Creates the ImGui context, GLFW and OpenGL3 backends and applies the theme.
+ */
 void UISystem::createImGuiContext()
 {
   IMGUI_CHECKVERSION();
@@ -41,6 +58,9 @@ void UISystem::createImGuiContext()
   setImGuiTheme();
 }
 
+/**
+ * @brief Shuts down the OpenGL3 and GLFW backends and destroys the ImGui context.
+ */
 void UISystem::destroyImGuiContext()
 {
   ImGui_ImplOpenGL3_Shutdown();
@@ -48,6 +68,9 @@ void UISystem::destroyImGuiContext()
   ImGui::DestroyContext();
 }
 
+/**
+ * @brief Starts a new ImGui frame via the OpenGL3 and GLFW backends.
+ */
 void UISystem::newFrame()
 {
   ImGui_ImplOpenGL3_NewFrame();
@@ -55,6 +78,12 @@ void UISystem::newFrame()
   ImGui::NewFrame();
 }
 
+/**
+ * @brief Renders ImGui draw data and presents the frame.
+ *
+ * Renders the accumulated ImGui draw data, clears and updates the viewport
+ * to the current framebuffer size, and issues the buffer swap.
+ */
 void UISystem::prepareBackbuffer()
 {
   ImGui::Render();
@@ -69,6 +98,9 @@ void UISystem::prepareBackbuffer()
   ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
+/**
+ * @brief Positions the next ImGui window to cover the full main viewport work area.
+ */
 void UISystem::prepareViewport()
 {
   ImGuiViewport* viewport = ImGui::GetMainViewport();
@@ -76,6 +108,9 @@ void UISystem::prepareViewport()
   ImGui::SetNextWindowSize(viewport->WorkSize);
 }
 
+/**
+ * @brief Applies the application's custom dark ImGui theme (style and colors).
+ */
 void UISystem::setImGuiTheme()
 {
 	ImGuiStyle& style = ImGui::GetStyle();

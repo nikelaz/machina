@@ -1,3 +1,8 @@
+/**
+ * @file tab-bar.cpp
+ * @brief Implementation of the tab bar components.
+ */
+
 #include "tab-bar.h"
 
 #include "imgui.h"
@@ -6,6 +11,9 @@
 
 namespace ui::components {
 
+/**
+ * @brief Renders a tab bar wrapping the given tab items.
+ */
 void tabBar(std::string_view title, std::function<void()> body)
 {
   if (ImGui::BeginTabBar(title.data()))
@@ -16,6 +24,9 @@ void tabBar(std::string_view title, std::function<void()> body)
   }
 }
 
+/**
+ * @brief Renders a single tab item wrapping the given content.
+ */
 void tabBarItem(std::string_view title, std::function<void()> body)
 {
   if (ImGui::BeginTabItem(title.data()))

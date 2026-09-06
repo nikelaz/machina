@@ -1,3 +1,8 @@
+/**
+ * @file system-info-view.cpp
+ * @brief Implementation of the system information view.
+ */
+
 #include "imgui.h"
 
 #include "system-info-view.h"
@@ -7,6 +12,9 @@
 
 namespace ui::views {
 
+/**
+ * @brief Renders OS, hostname, kernel and architecture details as text.
+ */
 void systemInfoView(const AppState& state)
 {
   ImGui::Text("OS:       %s", state.system_info.os.c_str());

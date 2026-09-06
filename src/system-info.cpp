@@ -1,6 +1,14 @@
+/**
+ * @file system-info.cpp
+ * @brief Implementation of system information retrieval via uname(2).
+ */
+
 #include "system-info.h"
 #include <sys/utsname.h>
 
+/**
+ * @brief Retrieves static system information via uname(2).
+ */
 std::expected<SystemInformation, std::error_code>
 getSystemInfo()
 {

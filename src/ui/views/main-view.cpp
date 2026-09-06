@@ -1,3 +1,8 @@
+/**
+ * @file main-view.cpp
+ * @brief Implementation of the root tabbed view.
+ */
+
 #include "main-view.h"
 
 #include "imgui.h"
@@ -11,6 +16,9 @@ using namespace ui::components;
 
 namespace ui::views {
 
+/**
+ * @brief Renders the root window with the main tab bar.
+ */
 void mainView(const AppState& state)
 {
   ImGuiWindowFlags canvas_flags = ImGuiWindowFlags_NoDecoration |

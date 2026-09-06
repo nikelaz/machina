@@ -1,3 +1,8 @@
+/**
+ * @file application.cpp
+ * @brief Implementation of the Application lifecycle and background worker.
+ */
+
 #include "application.h"
 
 #include "process-reader.h"
@@ -15,6 +20,13 @@ Application::Application()
   run();
 }
 
+/**
+ * @brief Samples system information once per second until shutdown.
+ *
+ * Builds a fresh AppState snapshot on each iteration by reading system
+ * information and the process list, then publishes it by atomically swapping
+ * the shared pointer (no data is copied on the consuming side).
+ */
 void Application::backgroundWorker()
 {
   using namespace std::chrono_literals;
@@ -38,6 +50,9 @@ void Application::backgroundWorker()
   } 
 }
 
+/**
+ * @brief Destroys the window and joins the background worker thread.
+ */
 Application::~Application()
 {
   destroyWindow();
@@ -45,6 +60,14 @@ Application::~Application()
   m_background_thread.join();
 }
 
+/**
+ * @brief Initializes GLFW and creates the main application window.
+ *
+ * Requests an OpenGL 3.0 context and enables vsync.
+ *
+ * @return Handle to the created window, or nullptr on failure (in which case
+ *         GLFW is terminated before returning).
+ */
 GLFWwindow* Application::createWindow()
 {
   // TODO: better error handling
@@ -84,12 +107,21 @@ GLFWwindow* Application::createWindow()
   return window;
 }
 
+/**
+ * @brief Destroys the GLFW window and terminates GLFW.
+ */
 void Application::destroyWindow()
 {
   glfwDestroyWindow(m_window);
   glfwTerminate();
 }
 
+/**
+ * @brief Runs the main render loop until the window is closed.
+ *
+ * Each frame polls window events, loads the latest published AppState
+ * snapshot (if any) and renders it to the backbuffer, then swaps buffers.
+ */
 void Application::run()
 {
   while (!glfwWindowShouldClose(m_window))

@@ -1,3 +1,8 @@
+/**
+ * @file process-reader.cpp
+ * @brief Implementation of /proc-based process enumeration.
+ */
+
 #include "process-reader.h"
 
 #include <filesystem>
@@ -7,6 +12,9 @@ namespace fs = std::filesystem;
 
 namespace process_reader {
 
+/**
+ * @brief Enumerates all running processes.
+ */
 std::vector<Process> getProcesses()
 {
   auto dir_iterator = fs::directory_iterator("/proc");

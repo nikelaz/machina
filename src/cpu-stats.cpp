@@ -1,7 +1,15 @@
 #include "cpu-stats.h"
 
+/**
+ * @file cpu-stats.cpp
+ * @brief Implementation of CPU utilization sampling from /proc/stat.
+ */
+
 namespace cpu_stats {
 
+/**
+ * @brief Reads aggregate CPU statistics for all cores from /proc/stat.
+ */
 ProcCpuStats readProcCpuStats()
 {
   std::ifstream file("/proc/stat");
@@ -27,6 +35,9 @@ ProcCpuStats readProcCpuStats()
   return stats;
 }
 
+/**
+ * @brief Calculates system-wide CPU utilization between two samples.
+ */
 double getCpuUtilization(const ProcCpuStats& previous, const ProcCpuStats& current)
 {
   uint64_t previous_idle = previous.idle + previous.iowait;
@@ -64,6 +75,9 @@ double getCpuUtilization(const ProcCpuStats& previous, const ProcCpuStats& curre
   return 1.0 - static_cast<double>(idle_delta) / total_delta;
 }
 
+/**
+ * @brief Measures CPU utilization over a 250 ms sampling interval.
+ */
 double measureCpuUtilization()
 {
   ProcCpuStats previous = readProcCpuStats();
