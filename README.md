@@ -4,9 +4,7 @@ A Linux desktop application that displays system information - CPU usage, memory
 usage, running processes and OS details. Self contained with immediate-mode UI.
 
 > **Note:** This is an **educational project**, written while learning about
-> Linux interfaces (mainly `/proc` and the various system APIs behind it).
-> It is not intended as a production-grade system monitor, but if you find it
-> useful you are welcome to use it.
+> Linux interfaces (mainly uname and the `/proc` virtual filesystem).
 
 ## Screenshots
 
