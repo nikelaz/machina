@@ -2,6 +2,10 @@
 #
 # install.sh — install / uninstall Machina (binary, icons, desktop entry).
 #
+# In the release tarball this script sits at the archive root, next to the
+# binary and packaging/. In the repository it lives inside packaging/ and
+# picks the binary up from build/.
+#
 # Usage:
 #   ./install.sh                # user install to ~/.local (no root needed)
 #   sudo ./install.sh           # system-wide install to /usr/local
@@ -14,14 +18,29 @@ set -euo pipefail
 APP_NAME="machina"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# The binary sits next to packaging/ in the tarball; fall back to build/ when
-# run from a git checkout.
-if [ -x "$SCRIPT_DIR/../$APP_NAME" ]; then
+# Desktop entry and icons live in packaging/ in the tarball, next to this
+# script in the repository.
+if [ -d "$SCRIPT_DIR/packaging/icons" ]; then
+  ASSETS_DIR="$SCRIPT_DIR/packaging"
+else
+  ASSETS_DIR="$SCRIPT_DIR"
+fi
+
+if [ ! -f "$ASSETS_DIR/$APP_NAME.desktop" ]; then
+  echo "error: $APP_NAME.desktop not found in $ASSETS_DIR" >&2
+  exit 1
+fi
+
+# The binary sits at the archive root in the tarball; fall back to the
+# checkout root or build/ when run from the repository.
+if [ -x "$SCRIPT_DIR/$APP_NAME" ]; then
+  BINARY="$SCRIPT_DIR/$APP_NAME"
+elif [ -x "$SCRIPT_DIR/../$APP_NAME" ]; then
   BINARY="$SCRIPT_DIR/../$APP_NAME"
 elif [ -x "$SCRIPT_DIR/../build/$APP_NAME" ]; then
   BINARY="$SCRIPT_DIR/../build/$APP_NAME"
 else
-  echo "error: $APP_NAME binary not found next to packaging/" >&2
+  echo "error: $APP_NAME binary not found" >&2
   exit 1
 fi
 
@@ -74,10 +93,10 @@ else
   mkdir -p "$BIN_DIR" "$DESKTOP_DIR"
 
   install -m 755 "$BINARY" "$BIN_DIR/$APP_NAME"
-  install -m 644 "$SCRIPT_DIR/$APP_NAME.desktop" "$DESKTOP_DIR/"
+  install -m 644 "$ASSETS_DIR/$APP_NAME.desktop" "$DESKTOP_DIR/"
 
   for s in 16 32 48 64 128 256 512; do
-    icon="$SCRIPT_DIR/icons/$APP_NAME-icon-$s.png"
+    icon="$ASSETS_DIR/icons/$APP_NAME-icon-$s.png"
     [ -f "$icon" ] || continue
     mkdir -p "$ICON_BASE/${s}x${s}/apps"
     install -m 644 "$icon" "$ICON_BASE/${s}x${s}/apps/$APP_NAME.png"

@@ -22,7 +22,7 @@ Download the archive, verify the checksum (optional) and install it:
 ```bash
 sha256sum -c machina-*-linux-x86_64.tar.gz.sha256
 tar -xzf machina-*-linux-x86_64.tar.gz
-sudo ./machina-*/packaging/install.sh   # system-wide, or without sudo for ~/.local
+sudo ./machina-*/install.sh   # system-wide, or without sudo for ~/.local
 ```
 
 Alternatively, just extract and run the binary directly — no installation is
@@ -30,9 +30,9 @@ required. The binary targets `x86_64` Linux and supports both X11 and Wayland.
 
 ## Desktop integration
 
-The window icon (title bar, alt-tab, task bar) is embedded directly in the
-binary, so it works out of the box on X11. On Wayland, and for showing Machina
-in application launchers/menus, run the installer from the tarball:
+The application icon (title bar, task bar, alt-tab, launcher) comes from the
+installed desktop entry and hicolor icon theme, which works on both X11 and
+Wayland. Run the installer from the tarball:
 
 ```bash
 ./install.sh                  # user install: ~/.local/bin, icons, desktop entry
@@ -43,8 +43,14 @@ sudo ./install.sh             # system-wide: /usr/local
 
 `install.sh` copies the binary to `<prefix>/bin`, the icon into the hicolor
 icon theme, and the desktop entry into `<prefix>/share/applications`, so
-Machina shows up in your app menu with its icon. The installer refreshes the
-desktop/icon caches automatically.
+Machina shows up in your app menu and window decorations. The installer
+refreshes the desktop/icon caches automatically.
+
+The window's X11 `WM_CLASS` and Wayland `app_id` are both set to `Machina`,
+matching the desktop entry's `StartupWMClass`, so desktop environments can
+associate the running window with the installed icon. On KDE Wayland, log out
+and back in (or restart `plasmashell`) the first time if the title bar icon
+doesn't appear right away.
 
 ## Build dependencies
 

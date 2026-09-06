@@ -61,29 +61,6 @@ add_executable(machina
 
 target_include_directories(machina PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-# Embedded window icons (decoded from PNG at runtime via stb_image)
-
-set(ICONS_EMBED_FILE "${CMAKE_CURRENT_BINARY_DIR}/icons_embed.cpp")
-add_custom_command(
-  OUTPUT "${ICONS_EMBED_FILE}"
-  COMMAND ${CMAKE_COMMAND}
-    -DOUT=${ICONS_EMBED_FILE}
-    -DICON_DIR=${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons
-    -P ${CMAKE_CURRENT_SOURCE_DIR}/cmake/embed-icons.cmake
-  DEPENDS
-    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/embed-icons.cmake"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-16.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-32.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-48.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-64.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-128.png"
-    "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/machina-icon-256.png"
-  COMMENT "Embedding window icons"
-  VERBATIM
-)
-target_sources(machina PRIVATE "${ICONS_EMBED_FILE}")
-target_include_directories(machina PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb")
-
 # fontconfig (for loading the system font)
 
 find_package(PkgConfig REQUIRED)

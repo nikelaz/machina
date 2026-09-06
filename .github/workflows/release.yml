@@ -52,6 +52,7 @@ jobs:
           mkdir -p "dist/machina-${VERSION}-linux-x86_64"
           cp build/machina "dist/machina-${VERSION}-linux-x86_64/"
           cp -r packaging "dist/machina-${VERSION}-linux-x86_64/packaging"
+          cp packaging/install.sh "dist/machina-${VERSION}-linux-x86_64/install.sh"
           tar -czf "machina-${VERSION}-linux-x86_64.tar.gz" -C dist "machina-${VERSION}-linux-x86_64"
           sha256sum "machina-${VERSION}-linux-x86_64.tar.gz" > "machina-${VERSION}-linux-x86_64.tar.gz.sha256"
 
