@@ -5,6 +5,8 @@
 
 #include "process-reader.h"
 
+#include <algorithm>
+#include <cctype>
 #include <filesystem>
 #include <fstream>
 
