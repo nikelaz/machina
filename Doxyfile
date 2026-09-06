@@ -2,7 +2,7 @@
 #   doxygen Doxyfile
 #   doxygen Doxyfile WARN_AS_ERROR=YES
 
-PROJECT_NAME           = SystemInfo
+PROJECT_NAME           = Machina
 INPUT                  = src
 RECURSIVE              = YES
 FILE_PATTERNS          = *.h

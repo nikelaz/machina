@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(SystemInfo VERSION 1.0 LANGUAGES CXX)
+project(Machina VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -42,7 +42,7 @@ target_link_libraries(imgui PUBLIC glfw OpenGL::GL)
 
 # Application 
 
-add_executable(SystemInfo
+add_executable(machina
   ./src/main.cpp
   ./src/application.cpp
   ./src/system-info.cpp
@@ -59,14 +59,14 @@ add_executable(SystemInfo
   ./src/ui/components/progress-bar.cpp
 )
 
-target_include_directories(SystemInfo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(machina PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # fontconfig (for loading the system font)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(FONTCONFIG REQUIRED IMPORTED_TARGET fontconfig)
 
-target_link_libraries(SystemInfo
+target_link_libraries(machina
   PRIVATE
     imgui
     PkgConfig::FONTCONFIG

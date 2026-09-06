@@ -1,4 +1,4 @@
-# System Info
+# Machina
 
 A Linux desktop application that displays system information - CPU usage, memory
 usage, running processes and OS details. Self contained with immediate-mode UI.
@@ -13,15 +13,15 @@ usage, running processes and OS details. Self contained with immediate-mode UI.
 Precompiled, statically linked binaries are available on the
 [Releases](../../releases) page. Each release provides:
 
-- `SystemInfo-<version>-linux-x86_64.tar.gz` — the application binary
-- `SystemInfo-<version>-linux-x86_64.tar.gz.sha256` — SHA-256 checksum
+- `machina-<version>-linux-x86_64.tar.gz` — the application binary
+- `machina-<version>-linux-x86_64.tar.gz.sha256` — SHA-256 checksum
 
 Download the archive, verify the checksum (optional) and run it:
 
 ```bash
-sha256sum -c SystemInfo-*-linux-x86_64.tar.gz.sha256
-tar -xzf SystemInfo-*-linux-x86_64.tar.gz
-./SystemInfo
+sha256sum -c machina-*-linux-x86_64.tar.gz.sha256
+tar -xzf machina-*-linux-x86_64.tar.gz
+./machina
 ```
 
 No installation is required. The binary targets `x86_64` Linux and supports
@@ -105,17 +105,17 @@ sudo pacman -S --needed \
 ## Building
 
 ```bash
-git clone --recursive https://github.com/nikelaz/system-info.git
-cd system-info 
+git clone --recursive https://github.com/nikelaz/machina.git
+cd machina
 
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
 ```
 
-The resulting binary is `build/SystemInfo`. Run it directly:
+The resulting binary is `build/machina`. Run it directly:
 
 ```bash
-./build/SystemInfo
+./build/machina
 ```
 
 To build the API documentation (requires Doxygen):
@@ -126,7 +126,7 @@ cmake --build build --target docs
 ```
 
 The generated API documentation is also hosted online at
-<https://nikelaz.github.io/system-info/>.
+<https://nikelaz.github.io/machina/>.
 
 ## License
 

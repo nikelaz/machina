@@ -44,21 +44,21 @@ jobs:
         run: cmake --build build --parallel
 
       - name: Strip binary
-        run: strip build/SystemInfo
+        run: strip build/machina
 
       - name: Archive binary
         run: |
           VERSION="${GITHUB_REF_NAME}"
           mkdir -p dist
-          cp build/SystemInfo dist/
-          tar -czf "SystemInfo-${VERSION}-linux-x86_64.tar.gz" -C dist SystemInfo
-          sha256sum "SystemInfo-${VERSION}-linux-x86_64.tar.gz" > "SystemInfo-${VERSION}-linux-x86_64.tar.gz.sha256"
+          cp build/machina dist/
+          tar -czf "machina-${VERSION}-linux-x86_64.tar.gz" -C dist machina
+          sha256sum "machina-${VERSION}-linux-x86_64.tar.gz" > "machina-${VERSION}-linux-x86_64.tar.gz.sha256"
 
       - name: Create GitHub release and upload assets
         uses: softprops/action-gh-release@v2
         with:
           name: Release ${{ github.ref_name }}
           files: |
-            SystemInfo-*-linux-x86_64.tar.gz
-            SystemInfo-*-linux-x86_64.tar.gz.sha256
+            machina-*-linux-x86_64.tar.gz
+            machina-*-linux-x86_64.tar.gz.sha256
           generate_release_notes: true

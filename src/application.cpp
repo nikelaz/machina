@@ -100,12 +100,12 @@ GLFWwindow* Application::createWindow()
   // TODO: Extract to some sort of app settings
   const int window_width = 450;
   const int window_height = 400;
-  const char* window_title = "System Information";
+  const char* window_title = "Machina";
 
   GLFWwindow* window = glfwCreateWindow(
     window_width,
     window_height,
-    "System Information",
+    "Machina",
     nullptr,
     nullptr
   );
