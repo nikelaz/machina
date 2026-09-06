@@ -10,8 +10,8 @@ usage, running processes and OS details. Self contained with immediate-mode UI.
 
 ## Screenshots
 
-<img width="1160" height="1116" alt="machina-system-info" src="https://github.com/user-attachments/assets/c198a4bb-9992-4c22-b777-4339aebaac07" />
-<img width="1160" height="1116" alt="machina-processes" src="https://github.com/user-attachments/assets/630335b6-4252-47df-8d9b-b8ef9e328bca" />
+<img width="320" height="308" alt="machina-system-info" src="https://github.com/user-attachments/assets/c198a4bb-9992-4c22-b777-4339aebaac07" />
+<img width="320" height="308" alt="machina-processes" src="https://github.com/user-attachments/assets/630335b6-4252-47df-8d9b-b8ef9e328bca" />
 
 ## Download
 
